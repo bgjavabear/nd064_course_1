@@ -6,6 +6,11 @@ metadata:
   labels:
     app: techtrends
 spec:
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
   replicas: 1
   selector: # defines how the Deployment finds which Pods to manage.
     matchLabels:
@@ -15,11 +20,6 @@ spec:
       labels:
         app: techtrends
     spec:
-      strategy:
-        rollingUpdate:
-          maxSurge: 25%
-          maxUnavailable: 25%
-        type: RollingUpdate
       containers:
         - name: techtrends
           image: agvaeducation/techtrends:latest
