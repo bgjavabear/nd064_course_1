@@ -15,6 +15,11 @@ spec:
       labels:
         app: techtrends
     spec:
+      strategy:
+        rollingUpdate:
+          maxSurge: 25%
+          maxUnavailable: 25%
+        type: RollingUpdate
       containers:
         - name: techtrends
           image: agvaeducation/techtrends:latest

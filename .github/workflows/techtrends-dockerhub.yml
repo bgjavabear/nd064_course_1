@@ -13,7 +13,9 @@ jobs:
         uses: docker/metadata-action@v3
         with:
           images: agvaeducation/techtrends
-          tags: latest
+          tags: |
+            latest
+            type=semver,pattern={{version}},value=v1.0.0
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:

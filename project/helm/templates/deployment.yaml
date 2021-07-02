@@ -15,6 +15,11 @@ spec:
       labels:
         app: techtrends
     spec:
+      strategy:
+        rollingUpdate:
+          maxSurge: 25%
+          maxUnavailable: 25%
+        type: RollingUpdate
       containers:
         - name: techtrends
           image: {{.Values.image.repository}}:{{.Values.image.tag}}
@@ -31,8 +36,8 @@ spec:
           readinessProbe:
             httpGet:
               path: {{.Values.readinessProbe.path}}
-              port: {{.Values.containerPort}}
+              port: {{.Values.readinessProbe.port}}
           livenessProbe:
             httpGet:
               path: {{.Values.livenessProbe.path}}
-              port: {{.Values.containerPort}}
+              port: {{.Values.livenessProbe.port}}

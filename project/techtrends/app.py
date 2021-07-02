@@ -93,10 +93,13 @@ def metrics():
 if __name__ == "__main__":
     root = logging.getLogger()
     root.setLevel(logging.DEBUG)
-    handler = logging.StreamHandler(sys.stdout)
-    handler.setLevel(logging.DEBUG)
-    formatter = logging.Formatter('%(levelname)s:%(name)s:%(asctime)s, %(message)s')
-    handler.setFormatter(formatter)
-    root.addHandler(handler)
+    # set logger to handle STDOUT and STDERR
+    stdout_handler = logging.StreamHandler(sys.stdout)
+    stderr_handler = logging.StreamHandler(sys.stderr)
+    stdout_handler.setLevel(logging.DEBUG)
+    stderr_handler.setLevel(logging.DEBUG)
+    handlers = [stderr_handler, stdout_handler]
+    logging.basicConfig(format='%(levelname)s:%(name)s:%(asctime)s, %(message)s', level=logging.DEBUG,
+                        handlers=handlers)
 
     app.run(host='0.0.0.0', port='3111')
