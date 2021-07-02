@@ -15,7 +15,7 @@ jobs:
           images: agvaeducation/techtrends
           tags: |
             latest
-            type=semver,pattern={{version}},value=v1.0.0
+            type=semver,pattern={{version}},value=v1.0.1
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
