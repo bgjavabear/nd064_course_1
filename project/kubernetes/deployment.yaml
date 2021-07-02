@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: techtrends
-          image: techtrends:latest
+          image: agvaeducation/techtrends:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 3111
