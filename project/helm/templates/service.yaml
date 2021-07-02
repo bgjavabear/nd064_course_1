@@ -9,10 +9,7 @@ spec:
   ports:
     - port: {{.Values.service.port}}
       protocol: {{.Values.service.protocol}}
-      {{if not .Values.service.targetPort}} targetPort: {{.Values.service.port}}
-      {{else}}
-      {{.Values.service.targetPort}}
-      {{end}}
+      {{if not .Values.service.targetPort}}targetPort:{{.Values.service.port}}{{else}}{{.Values.service.targetPort}}{{end}}
   type: {{.Values.service.type}}
   selector:
     app: techtrends
