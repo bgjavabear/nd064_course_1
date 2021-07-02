@@ -8,6 +8,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+
+      - name: Increment Step Patch
+        id: increment-step-patch
+        uses: Benbentwo/increment-semver@master
+        with:
+          version-level: '-p'
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
@@ -18,4 +24,4 @@ jobs:
         with:
           context: project
           push: true
-          tags: agvaeducation/techtrends:latest
+          tags: agvaeducation/techtrends:${{steps.increment-step-patch.outputs.version}}

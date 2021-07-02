@@ -1,9 +1,9 @@
-import sqlite3
+import logging
+import sys
 
-from flask import Flask, jsonify, json, render_template, request, url_for, redirect, flash
-from werkzeug.exceptions import abort
+from flask import Flask, json, render_template, request, url_for, redirect, flash
+
 from database_service import *
-import logging, sys
 
 # Define the Flask application
 app = Flask(__name__)
@@ -56,11 +56,22 @@ def create():
 
 @app.route('/healthz')
 def health_check():
-    response = app.response_class(
-        response=json.dumps({"result": "OK - healthy"}),
-        status=200,
-        mimetype='application/json'
-    )
+    is_db_connection_established = is_connection_established()
+    is_table_exists = is_posts_table_exists()
+    is_app_responsive = is_db_connection_established and is_table_exists
+
+    if is_app_responsive:
+        response = app.response_class(
+            response=json.dumps({"result": "OK - healthy"}),
+            status=200,
+            mimetype='application/json'
+        )
+    else:
+        response = app.response_class(
+            response=json.dumps({"result": "ERROR - unhealthy"}),
+            status=500,
+            mimetype='application/json'
+        )
     return response
 
 

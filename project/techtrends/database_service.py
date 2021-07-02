@@ -43,5 +43,20 @@ def get_post_count():
     return post_count
 
 
+def is_connection_established():
+    try:
+        get_db_connection()
+        return True
+    except sqlite3.Error:
+        return False
+
+
+def is_posts_table_exists():
+    connection = get_db_connection()
+    table = connection.execute('SELECT name FROM sqlite_master WHERE type = "table" AND name = ?',
+                               ('posts',)).fetchone()
+    return table is not None
+
+
 def get_connection_count():
     return connection_count
