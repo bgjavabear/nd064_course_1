@@ -8,11 +8,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Generate build number
-        id: buildnumber
-        uses: einaregilsson/build-number@v3
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v3
         with:
-          token: ${{secrets.docker_access_token}}
+          images: agvaeducation/techtrends
+          tags: latest
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
@@ -23,4 +24,4 @@ jobs:
         with:
           context: project
           push: true
-          tags: ${{steps.buildnumber.outputs.build_number}}
+          tags: ${{ steps.meta.outputs.tags }}
