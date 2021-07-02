@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: techtrends
+  namespace: sandbox
+  labels:
+    app: techtrends
+spec:
+  replicas: 1
+  selector: # defines how the Deployment finds which Pods to manage.
+    matchLabels:
+      app: techtrends
+  template:
+    metadata:
+      labels:
+        app: techtrends
+    spec:
+      containers:
+        - name: techtrends
+          image: techtrends:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3111
+          resources:
+            limits:
+              cpu: 500m
+              memory: 128Mi
+            requests:
+              cpu: 250m
+              memory: 64Mi
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 3111
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 3111
