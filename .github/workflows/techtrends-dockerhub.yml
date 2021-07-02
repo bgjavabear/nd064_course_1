@@ -25,3 +25,4 @@ jobs:
           context: project
           push: true
           tags: agvaeducation/techtrends:${{steps.increment-step-patch.outputs.version}}
+
